@@ -11,5 +11,5 @@ data class MovieResponse(
     val totalResults: String?,
 
     @field:SerializedName("Search")
-    val search: List<MovieItemResponse>
+    val search: List<MovieItemResponse>?
 )
