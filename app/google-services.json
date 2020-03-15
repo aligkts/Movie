@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1032381987926",
+    "firebase_url": "https://movie-b4f9c.firebaseio.com",
+    "project_id": "movie-b4f9c",
+    "storage_bucket": "movie-b4f9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032381987926:android:19123624035fee6c380ff7",
+        "android_client_info": {
+          "package_name": "com.aligkts.movie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032381987926-d2akj9jrvovd0vj5vqktph424k0vtrbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnZ9_IEvFIBLVmfh-ERY0WcAVkmXO0-yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032381987926-d2akj9jrvovd0vj5vqktph424k0vtrbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.aligkts.movie.common.di.ViewModelFactory
 import com.aligkts.movie.common.di.key.ViewModelKey
 import com.aligkts.movie.ui.movie.MovieViewModel
+import com.aligkts.movie.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -17,9 +18,15 @@ abstract class ViewModelModule {
 
     @IntoMap
     @Binds
+    @ViewModelKey(SplashViewModel::class)
+    abstract fun provideSplashViewModel(splashViewModel: SplashViewModel): ViewModel
+
+    @IntoMap
+    @Binds
     @ViewModelKey(MovieViewModel::class)
     abstract fun provideMoviesViewModel(moviesViewModel: MovieViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+
 }
