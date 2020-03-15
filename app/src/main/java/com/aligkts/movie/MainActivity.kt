@@ -1,10 +1,13 @@
 package com.aligkts.movie
 
+import android.app.SearchManager
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aligkts.movie.common.ui.EndlessScrollListener
 import com.aligkts.movie.common.ui.observeNonNull
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var moviesViewModel: MovieViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var lastQuery: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -34,26 +38,54 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         moviesViewModel =
-            ViewModelProviders.of(this, viewModelProviderFactory).get(MovieViewModel::class.java)
+            ViewModelProvider(this, viewModelProviderFactory).get(MovieViewModel::class.java)
 
         moviesViewModel.getMoviesLiveData().observeNonNull(this) {
             renderMovies(it)
         }
 
         savedInstanceState.runIfNull {
-            fetchMovies("batman", FIRST_PAGE)
+            fetchMovies("", FIRST_PAGE)
         }
-        initPopularTVShowsRecyclerView()
+        initMoviesRecyclerView()
     }
 
-    private fun initPopularTVShowsRecyclerView() {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchItem = menu?.findItem(R.id.item_search)
+        val searchView = searchItem?.actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchView.clearFocus()
+                searchView.setQuery("", false)
+                searchItem.collapseActionView()
+                query?.let {
+                    movieAdapter.clearItemList()
+                    fetchMovies(it, FIRST_PAGE)
+                    lastQuery = it
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+        return true
+    }
+
+    private fun initMoviesRecyclerView() {
         val linearLayoutManager = LinearLayoutManager(this)
         binding.recyclerView.apply {
             adapter = movieAdapter
             layoutManager = linearLayoutManager
             addOnScrollListener(object : EndlessScrollListener(linearLayoutManager) {
                 override fun onLoadMore(page: Int) {
-                    fetchMovies("batman", page)
+                    fetchMovies(lastQuery, page)
                 }
             })
         }
@@ -64,11 +96,16 @@ class MainActivity : AppCompatActivity() {
             viewState = movieViewState
             executePendingBindings()
         }
-        movieAdapter.setTvShows(movieViewState.getMovies())
+        if (movieAdapter.itemCount > 0)
+            movieAdapter.setScrolledMovie(movieViewState.getMovies())
+        else
+            movieAdapter.setMovie(movieViewState.getMovies())
+
     }
 
     private fun fetchMovies(searchText: String, page: Int) {
-        moviesViewModel.fetchMovies(searchText, page)
+        if (searchText.isNotEmpty())
+            moviesViewModel.fetchMovies(searchText, page)
     }
 
     companion object {

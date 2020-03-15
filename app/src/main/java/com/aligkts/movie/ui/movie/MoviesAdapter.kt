@@ -24,15 +24,24 @@ class MoviesAdapter @Inject constructor() :
     override fun getItemCount(): Int = movieItems.size
 
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
-        holder.bind(getTvShow(position))
+        holder.bind(getMovies(position))
     }
 
-    private fun getTvShow(position: Int) = movieItems[position]
+    private fun getMovies(position: Int) = movieItems[position]
 
-    fun setTvShows(movie: List<MovieItem>) {
+    fun setScrolledMovie(movie: List<MovieItem>) {
         val beforeSize = movieItems.size
         movieItems.addAll(movie)
         notifyItemRangeInserted(beforeSize, movie.size)
+    }
+
+    fun setMovie(movies: List<MovieItem>) {
+        movieItems.addAll(movies)
+        notifyDataSetChanged()
+    }
+
+    fun clearItemList() {
+        movieItems.clear()
     }
 
     inner class MovieItemViewHolder(private val binding: ItemMovieBinding) :

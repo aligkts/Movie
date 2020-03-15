@@ -1,7 +1,6 @@
 package com.aligkts.movie.domain
 
 import com.aligkts.movie.common.Mapper
-import com.aligkts.movie.data.movie.response.MovieItemResponse
 import com.aligkts.movie.data.movie.response.MovieResponse
 import com.aligkts.movie.ui.movie.model.MovieItem
 import javax.inject.Inject
@@ -14,15 +13,16 @@ class MoviesMapper @Inject constructor() : Mapper<MovieResponse, List<MovieItem>
 
     override fun mapFrom(type: MovieResponse): List<MovieItem> {
         type.search.let {
-            return it.map { searchItem ->
-                MovieItem(
-                    type = searchItem.type,
-                    year = searchItem.year,
-                    imdbID = searchItem.imdbID,
-                    poster = searchItem.poster,
-                    title = searchItem.title
-                )
+            it?.let {
+                return it.map { searchItem ->
+                    MovieItem(
+                        year = searchItem.year,
+                        poster = searchItem.poster,
+                        title = searchItem.title
+                    )
+                }
             }
         }
+        return emptyList()
     }
 }
