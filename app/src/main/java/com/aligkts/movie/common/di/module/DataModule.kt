@@ -9,5 +9,4 @@ import dagger.Module
 @Module(
     includes = [NetworkModule::class]
 )
-class DataModule {
-}
+class DataModule

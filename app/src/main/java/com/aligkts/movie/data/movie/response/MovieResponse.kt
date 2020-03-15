@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 data class MovieResponse(
 
     @field:SerializedName("Response")
-    val response: String? = null,
+    val response: String?,
 
     @field:SerializedName("totalResults")
-    val totalResults: String? = null,
+    val totalResults: String?,
 
     @field:SerializedName("Search")
-    val search: List<MovieItemResponse?>? = null
+    val search: List<MovieItemResponse>
 )

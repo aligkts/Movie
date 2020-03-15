@@ -6,6 +6,7 @@ import com.aligkts.movie.common.Resource
 import com.aligkts.movie.common.RxAwareViewModel
 import com.aligkts.movie.common.ui.plusAssign
 import com.aligkts.movie.domain.FetchMoviesUseCase
+import com.aligkts.movie.ui.movie.model.Movie
 import com.aligkts.movie.ui.movie.model.MovieItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject

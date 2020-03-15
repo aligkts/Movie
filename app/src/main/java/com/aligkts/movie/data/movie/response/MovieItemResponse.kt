@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName
 data class MovieItemResponse(
 
     @field:SerializedName("Type")
-    val type: String? = null,
+    val type: String?,
 
     @field:SerializedName("Year")
-    val year: String? = null,
+    val year: String?,
 
     @field:SerializedName("imdbID")
-    val imdbID: String? = null,
+    val imdbID: String?,
 
     @field:SerializedName("Poster")
-    val poster: String? = null,
+    val poster: String?,
 
     @field:SerializedName("Title")
-    val title: String? = null
+    val title: String?
 )
