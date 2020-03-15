@@ -1,5 +1,6 @@
 package com.aligkts.movie.data
 
+import com.aligkts.movie.data.RequestInterceptor.Companion.BASE_URL
 import com.aligkts.movie.data.movie.MovieRestInterface
 import dagger.Module
 import dagger.Provides
@@ -38,7 +39,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("http://www.omdbapi.com/")
+            .baseUrl(BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
